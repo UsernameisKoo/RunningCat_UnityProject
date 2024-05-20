@@ -117,7 +117,7 @@ public class PlayerMove : MonoBehaviour
         rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
 
         // Animation
-        anim.SetTrigger("doDamaged");
+        //anim.SetTrigger("doDamaged");
 
         Invoke("OffDamaged", 3); // 무적시간 3초 후 푸는 함수 호출
     }
