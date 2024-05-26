@@ -38,9 +38,7 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-        //Direction Sprite
-        if (Input.GetButtonDown("Horizontal"))
-            spriteRenderer.flipX = (Input.GetAxisRaw("Horizontal") == -1);
+        
 
         //Animation
         if (Mathf.Abs(rigid.velocity.x) < 0.7/*rigid.velocity.normalized.x == 0*/)
@@ -58,10 +56,10 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
 
         rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
-        if (rigid.velocity.x > maxSpeed)
+        if (rigid.velocity.x >= 0)
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        else if (rigid.velocity.x < maxSpeed * (-1))
-            rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
+        else if (rigid.velocity.x < 0)
+            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
 
         //Landing Platform
         if (rigid.velocity.y < 0)
@@ -112,14 +110,12 @@ public class PlayerMove : MonoBehaviour
         //View Alpha : 무적시간 투명하게
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
 
-        // Reaction Force : 한대 맞고 튕겨나가기
-        int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
-        rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
+
 
         // Animation
         //anim.SetTrigger("doDamaged");
 
-        Invoke("OffDamaged", 3); // 무적시간 3초 후 푸는 함수 호출
+        Invoke("OffDamaged", 2); // 무적시간 3초 후 푸는 함수 호출
     }
 
     void OffDamaged()
