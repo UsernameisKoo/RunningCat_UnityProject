@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public PlayerMove player;
     public GameObject[] Stages;
     public GameObject Home;
+    public GameObject Gameover;
     public GameObject[] Hearts;
     public int heart;
 
@@ -46,7 +47,8 @@ public class GameManager : MonoBehaviour
             {
 
                 Stages[stageIndex].SetActive(false);
-                Home.SetActive(true);
+                Gameover.SetActive(true);
+                //Home.SetActive(true);
             }
         }
 
