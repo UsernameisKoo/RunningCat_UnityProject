@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
     //public int stagePoint;
     public int stageIndex;
     public PlayerMove player;
+    public GameObject Me;
     public GameObject[] Stages;
     public GameObject Home;
     public GameObject Gameover;
+    public GameObject Gameclear;
     public GameObject[] Hearts;
     public int heart;
 
@@ -22,14 +24,14 @@ public class GameManager : MonoBehaviour
             Stages[stageIndex].SetActive(false);
             stageIndex++;
 
+            Invoke("StageClear", 2);
 
-            Home.SetActive(true);
             //Stages[stageIndex].SetActive(true);
             //PlayerReposition();
         }
         else //Game Clear
         {
-            Home.SetActive(true);
+            Invoke("StageClear", 2);
         }
 
 
@@ -45,9 +47,7 @@ public class GameManager : MonoBehaviour
             // 죽음 -> 홈으로 돌아감
             if (heart == 0)
             {
-
-                Stages[stageIndex].SetActive(false);
-                Gameover.SetActive(true);
+                Invoke("GameOver", 2);
                 //Home.SetActive(true);
             }
         }
@@ -62,6 +62,19 @@ public class GameManager : MonoBehaviour
             HeartDown();
             HeartDown();
         }
+    }
+    void GameOver()
+    {
+        Me.SetActive(false);
+        Stages[stageIndex].SetActive(false);
+        Gameover.SetActive(true);
+    }
+
+    void StageClear()
+    {
+        Me.SetActive(false);
+        Stages[stageIndex].SetActive(false);
+        Gameclear.SetActive(true);
     }
 
 }

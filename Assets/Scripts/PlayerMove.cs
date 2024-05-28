@@ -8,7 +8,6 @@ public class PlayerMove : MonoBehaviour
     public float maxSpeed;
     public float jumpPower;
     public PlayerMove player;
-    int jump_cnt = 0;
     public GameManager gameManager;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
@@ -23,25 +22,24 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         //Jump
-        if (Input.GetButtonUp("Jump") && jump_cnt < 2/*!anim.GetBool("isJumping")*/)
+        if (Input.GetButtonUp("Jump")/*!anim.GetBool("isJumping")*/)
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
-            jump_cnt++;
         }
 
 
-        //Stop Speed
+        /*//Stop Speed
         if (Input.GetButtonUp("Horizontal"))
         {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
 
-        }
+        }*/
 
         
 
         //Animation
-        if (Mathf.Abs(rigid.velocity.x) < 0.7/*rigid.velocity.normalized.x == 0*/)
+        if ((anim.GetBool("isJumping")))/*Mathf.Abs(rigid.velocity.x) < 0.7*//*rigid.velocity.normalized.x == 0*/
         {
             anim.SetBool("isWalking", false);
         }
@@ -57,9 +55,9 @@ public class PlayerMove : MonoBehaviour
 
         rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
         if (rigid.velocity.x >= 0)
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
+            rigid.velocity = new Vector2(0, rigid.velocity.y); //maxSpeed
         else if (rigid.velocity.x < 0)
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
+            rigid.velocity = new Vector2(0, rigid.velocity.y);
 
         //Landing Platform
         if (rigid.velocity.y < 0)
@@ -75,7 +73,6 @@ public class PlayerMove : MonoBehaviour
                 if (rayHit.distance < 0.5f)
                 {
                     anim.SetBool("isJumping", false);
-                    jump_cnt = 0;
                 }
             }
         }
