@@ -5317,6 +5317,7 @@ GameObject:
   - component: {fileID: 1773230945}
   - component: {fileID: 1773230944}
   - component: {fileID: 1773230943}
+  - component: {fileID: 1773230946}
   m_Layer: 5
   m_Name: Home Button
   m_TagString: Home Button
@@ -5387,7 +5388,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1773230944}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1773230946}
+        m_TargetAssemblyTypeName: ClickButton, Assembly-CSharp
+        m_MethodName: OnClickHomeButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1773230944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5426,6 +5439,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773230941}
   m_CullTransparentMesh: 1
+--- !u!114 &1773230946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773230941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c9882831ac779478fc5fc58771d79d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 531311287}
 --- !u!1 &1775493061
 GameObject:
   m_ObjectHideFlags: 0
@@ -5625,6 +5651,7 @@ GameObject:
   - component: {fileID: 1861502350}
   - component: {fileID: 1861502349}
   - component: {fileID: 1861502348}
+  - component: {fileID: 1861502351}
   m_Layer: 5
   m_Name: Retry Button
   m_TagString: Retry Button
@@ -5695,7 +5722,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1861502349}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1861502351}
+        m_TargetAssemblyTypeName: ClickButton, Assembly-CSharp
+        m_MethodName: OnClickRetryButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1861502349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5734,6 +5773,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1861502346}
   m_CullTransparentMesh: 1
+--- !u!114 &1861502351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861502346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c9882831ac779478fc5fc58771d79d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 531311287}
 --- !u!1 &1968757906
 GameObject:
   m_ObjectHideFlags: 0

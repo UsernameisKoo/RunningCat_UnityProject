@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
 
     public void NextStage()
     {
-        //Change Stage
+        // 두 번째 retry시 stage텅비는 버그 -> stage 활성화 하면서 플레이어랑 맵 좌표 초기화해야함
+        // 좌표 이동된 상태 그대로로 다시 시작해서 안 보이는 거임.
         if (stageIndex < Stages.Length - 1)
         {
             Stages[stageIndex].SetActive(false);
