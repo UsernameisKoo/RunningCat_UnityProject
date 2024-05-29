@@ -7,6 +7,8 @@ TagManager:
   - Platform
   - Enemy
   - Heart
+  - Retry Button
+  - Home Button
   layers:
   - Default
   - TransparentFX
