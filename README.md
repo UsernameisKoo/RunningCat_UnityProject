@@ -1,2 +1,2 @@
 # RunningCat_Project
-# Unity Game Project
+Unity Game Project
