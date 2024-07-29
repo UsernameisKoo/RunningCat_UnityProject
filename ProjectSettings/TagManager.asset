@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Platform
   - Enemy
+  - Heart
+  - Retry Button
+  - Home Button
+  - finish
   layers:
   - Default
   - TransparentFX
@@ -19,7 +23,7 @@ TagManager:
   - Enemy
   - Player
   - PlayerDamaged
-  - 
+  - finish
   - 
   - 
   - 

@@ -4,35 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //public int totalPoint;
-    //public int stagePoint;
+    public Transform finishTransform; // Finish 오브젝트의 위치를 가리키는 Transform
+    public GameObject stage1; // Stage1 오브젝트 stage1만 구현 중
+    public GameManager gameManager;
     public int stageIndex;
-    public PlayerMove player;
+    public GameObject Me;
     public GameObject[] Stages;
     public GameObject Home;
+    public GameObject Gameover;
+    public GameObject Gameclear;
     public GameObject[] Hearts;
     public int heart;
-
-    public void NextStage()
-    {
-        //Change Stage
-        if (stageIndex < Stages.Length - 1)
-        {
-            Stages[stageIndex].SetActive(false);
-            stageIndex++;
-
-
-            Home.SetActive(true);
-            //Stages[stageIndex].SetActive(true);
-            //PlayerReposition();
-        }
-        else //Game Clear
-        {
-            Home.SetActive(true);
-        }
-
-
-    }
 
     public void HeartDown()
     {
@@ -44,22 +26,20 @@ public class GameManager : MonoBehaviour
             // 죽음 -> 홈으로 돌아감
             if (heart == 0)
             {
-
-                Stages[stageIndex].SetActive(false);
-                Home.SetActive(true);
+                Invoke("GameOver", 2);
             }
         }
-
     }
-    void OnTriggerEnter2D(Collider2D collision)
+
+    void GameOver()
     {
-        //낭떠러지 떨어지면
-        if (collision.gameObject.tag == "Player")
-        {
-            HeartDown();
-            HeartDown();
-            HeartDown();
-        }
+        Me.SetActive(false);
+        Stages[stageIndex].SetActive(false); // 현재 스테이지 비활성화
+        Gameover.SetActive(true); // 게임오버를 실행 시킴
     }
 
+    public void StageClear()
+    {
+        Gameclear.SetActive(true);
+    }
 }

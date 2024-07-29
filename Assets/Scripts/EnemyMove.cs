@@ -39,21 +39,21 @@ public class EnemyMove : MonoBehaviour
     }
 
     // Àç±Í ÇÔ¼ö
-    void Think()
-    {
+    //void Think()
+    //{
         //Set Next Active
-        nextMove = Random.Range(-1,2);
+        //nextMove = Random.Range(-1,2);
 
         //Sprite Animation
-        anim.SetInteger("WalkSpeed", nextMove);
+        //anim.SetInteger("WalkSpeed", nextMove);
         
         //Flip Sprite
-        if(nextMove != 0)
-        {
-            spriteRenderer.flipX = (nextMove == 1);
-        }
+        //if(nextMove != 0)
+        //{
+            //spriteRenderer.flipX = (nextMove == 1);
+        //}
 
         //Recursive
-        Invoke("Think", 5);
-    }
+        //Invoke("Think", 5);
+    //}
 }

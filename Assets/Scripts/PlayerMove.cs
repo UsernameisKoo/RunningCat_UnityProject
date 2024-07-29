@@ -5,82 +5,84 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float maxSpeed;
+    //public float maxSpeed;
     public float jumpPower;
+    public float speed = 3.0f;
     public PlayerMove player;
-    int jump_cnt = 0;
     public GameManager gameManager;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
+
+    void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
+
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+
+        if (gameManager == null)
+        {
+            gameManager = FindObjectOfType<GameManager>();
+        }
     }
     void Update()
     {
         //Jump
-        if (Input.GetButtonUp("Jump") && jump_cnt < 2/*!anim.GetBool("isJumping")*/)
+        if (Input.GetButtonUp("Jump"))//!anim.GetBool("isJumping"))
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            anim.SetBool("isJumping", true);
-            jump_cnt++;
+            //anim.SetBool("isJumping", true);
+        }
+            rigid.velocity = new Vector2(speed, rigid.velocity.y);
+        
         }
 
 
-        //Stop Speed
-        if (Input.GetButtonUp("Horizontal"))
-        {
-            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
+    /*//Stop Speed
+    if (Input.GetButtonUp("Horizontal"))
+    {
+        rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
 
-        }
+    }*/
 
-        //Direction Sprite
-        if (Input.GetButtonDown("Horizontal"))
-            spriteRenderer.flipX = (Input.GetAxisRaw("Horizontal") == -1);
 
-        //Animation
-        if (Mathf.Abs(rigid.velocity.x) < 0.7/*rigid.velocity.normalized.x == 0*/)
-        {
-            anim.SetBool("isWalking", false);
-        }
-        else
-        {
-            anim.SetBool("isWalking", true);
-        }
+
+    //Animation
+    /*if ((anim.GetBool("isJumping"))) Mathf.Abs(rigid.velocity.x) < 0.7*//*rigid.velocity.normalized.x == 0
+    {
+        anim.SetBool("isWalking", false);
     }
+    else
+    {
+        anim.SetBool("isWalking", true);
+    }
+}*/
     void FixedUpdate()
     {
-        //Move By Key Control
-        float h = Input.GetAxisRaw("Horizontal");
-
-        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
-        if (rigid.velocity.x > maxSpeed)
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        else if (rigid.velocity.x < maxSpeed * (-1))
-            rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
+        // 키로 움직이는거 안함
 
         //Landing Platform
-        if (rigid.velocity.y < 0)
-        {
+     
+            //transform.Translate(Vector3.right * speed * Time.deltaTime);
+            /*  Debug.DrawRay(rigid.position, Vector3.down*4,   new Color(0, 1, 0));
 
+              RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, 10,  LayerMask.GetMask("Platform"));
 
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
-
-            if (rayHit.collider != null)
-            {
-                if (rayHit.distance < 0.5f)
-                {
-                    anim.SetBool("isJumping", false);
-                    jump_cnt = 0;
-                }
-            }
-        }
+              if (rayHit.collider != null)
+              {
+                 // if (rayHit.distance < 0.5f)
+                  {
+                     // anim.SetBool("isJumping", false);
+                  }
+              }
+          }*/
+        
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -90,16 +92,32 @@ public class PlayerMove : MonoBehaviour
             OnDamaged(collision.transform.position);
         }
     }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Finish")
+        if (collision.gameObject.CompareTag("Player"))
         {
-            //Next Stage
+            if (collision.transform.position.y < -10) // 예: 낭떠러지에 떨어졌는지 확인
+            {
+                Debug.Log("Player Collision Detected");
+                gameManager.HeartDown();
+                gameManager.HeartDown();
+                gameManager.HeartDown();
+                Invoke("Gameover", 2);
+            }
+        }
+
+        if (collision.gameObject.CompareTag("finish"))
+        {
+            Debug.Log("Finish Collision Detected");
             gameManager.heart = 3;
-            gameManager.NextStage();
+            gameManager.Me.SetActive(false);
+            gameManager.Stages[gameManager.stageIndex].SetActive(false); // 현재 스테이지 비활성화
+            gameManager.StageClear();
+            Debug.Log("Game Clear");
         }
     }
+
+
 
     void OnDamaged(Vector2 targetPos)
     {
@@ -112,14 +130,10 @@ public class PlayerMove : MonoBehaviour
         //View Alpha : 무적시간 투명하게
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
 
-        // Reaction Force : 한대 맞고 튕겨나가기
-        int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
-        rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
-
         // Animation
-        anim.SetTrigger("doDamaged");
+        //anim.SetTrigger("doDamaged");
 
-        Invoke("OffDamaged", 3); // 무적시간 3초 후 푸는 함수 호출
+        Invoke("OffDamaged", 2); // 무적시간 3초 후 푸는 함수 호출
     }
 
     void OffDamaged()
