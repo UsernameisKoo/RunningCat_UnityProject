@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         rigid=GetComponent<Rigidbody2D>();
-        isGrounded = true;
+        
     }
 
 
