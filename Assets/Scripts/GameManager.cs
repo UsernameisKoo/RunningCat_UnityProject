@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
             // 죽음 -> 홈으로 돌아감
             if (heart == 0)
             {
-                Invoke("GameOver", 2);
+                Invoke("GameOver", 0.5f);
             }
         }
     }
