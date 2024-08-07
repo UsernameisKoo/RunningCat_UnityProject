@@ -11657,6 +11657,7 @@ MonoBehaviour:
   speed: 0
   player: {fileID: 1775493063}
   gameManager: {fileID: 531311287}
+  isGrounded: 0
 --- !u!1 &905437530
 GameObject:
   m_ObjectHideFlags: 0
@@ -11705,7 +11706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f560732434d12b241a8e0b4c45688a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextMove: 0
 --- !u!95 &905437533
 Animator:
   serializedVersion: 5
@@ -15350,7 +15350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!483693784 &1520443833
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -18188,6 +18188,7 @@ MonoBehaviour:
   speed: 3
   player: {fileID: 0}
   gameManager: {fileID: 0}
+  isGrounded: 0
 --- !u!95 &1775493064
 Animator:
   serializedVersion: 5
@@ -22787,7 +22788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f560732434d12b241a8e0b4c45688a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextMove: 0
 --- !u!95 &2078128216
 Animator:
   serializedVersion: 5
