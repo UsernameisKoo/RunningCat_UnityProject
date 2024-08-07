@@ -39,7 +39,7 @@ public class PlayerMove : MonoBehaviour
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             //anim.SetBool("isJumping", true);
         }
-            rigid.velocity = new Vector2(speed, rigid.velocity.y);
+            rigid.velocity = new Vector2(speed, rigid.velocity.y); //rigid.velocity.y
         
         }
 
@@ -94,9 +94,9 @@ public class PlayerMove : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Platform"))
         {
-            if (collision.transform.position.y < -10) // 예: 낭떠러지에 떨어졌는지 확인
+            if (collision.transform.position.y <= 0) // 예: 낭떠러지에 떨어졌는지 확인
             {
                 Debug.Log("Player Collision Detected");
                 gameManager.HeartDown();
@@ -129,9 +129,6 @@ public class PlayerMove : MonoBehaviour
 
         //View Alpha : 무적시간 투명하게
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-
-        // Animation
-        //anim.SetTrigger("doDamaged");
 
         Invoke("OffDamaged", 2); // 무적시간 3초 후 푸는 함수 호출
     }
