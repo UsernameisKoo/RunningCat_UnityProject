@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject Gameclear;
     public GameObject[] Hearts;
     public int heart;
+ 
 
     public void HeartDown()
     {
