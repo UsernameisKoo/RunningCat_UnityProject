@@ -108,7 +108,7 @@ public class PlayerMove : MonoBehaviour
                 gameManager.HeartDown();
                 gameManager.HeartDown();
                 gameManager.HeartDown();
-                Invoke("Gameover", 2);
+                Invoke("Gameover", 0.5f);
             }
         }
 
