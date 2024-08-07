@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -10,13 +7,18 @@ public class PlayerMove : MonoBehaviour
     public float speed = 3.0f;
     public PlayerMove player;
     public GameManager gameManager;
-    Rigidbody2D rigid;
+    public Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
+   
+    public bool isGrounded;
+ 
 
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        rigid=GetComponent<Rigidbody2D>();
+        isGrounded = true;
     }
 
 
@@ -32,16 +34,16 @@ public class PlayerMove : MonoBehaviour
         }
     }
     void Update()
-    {
+    {  
         //Jump
-        if (Input.GetButtonUp("Jump"))//!anim.GetBool("isJumping"))
+        if (Input.GetKeyDown(KeyCode.Space)&&isGrounded)//!anim.GetBool("isJumping"))
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            isGrounded = false;
             //anim.SetBool("isJumping", true);
+ 
         }
-            rigid.velocity = new Vector2(speed, rigid.velocity.y);
-        
-        }
+    }
 
 
     /*//Stop Speed
@@ -90,6 +92,10 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             OnDamaged(collision.transform.position);
+        }
+        if (collision.gameObject.CompareTag ("Platform"))
+        {
+            isGrounded = true;
         }
     }
     void OnTriggerEnter2D(Collider2D collision)
