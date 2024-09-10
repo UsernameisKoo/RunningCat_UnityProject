@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+
         gameManager = FindObjectOfType<GameManager>();
         rigid=GetComponent<Rigidbody2D>();
         
@@ -147,4 +149,6 @@ public class PlayerMove : MonoBehaviour
         gameObject.layer = 10;
         spriteRenderer.color = new Color(1, 1, 1, 1);
     }
+
+    
 }
