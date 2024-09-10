@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 // 두 번째 retry시 stage텅비는 버그 -> stage 활성화 하면서 플레이어랑 맵 좌표 초기화해야함
 // 좌표 이동된 상태 그대로로 다시 시작해서 안 보이는 거임.
@@ -21,8 +20,7 @@ public class ClickButton : MonoBehaviour
     }
     public void OnClickHomeButton()
     {
-        SceneManager.LoadScene(0);
+        gameManager.Gameover.SetActive(false);
+        gameManager.Home.SetActive(true);
     }
-
-    
 }
