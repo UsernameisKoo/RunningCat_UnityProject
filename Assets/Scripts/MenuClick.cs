@@ -16,7 +16,7 @@ public class MenuClick : MonoBehaviour
     {
         
     }
-    public void OnClickHomeButton()
+    public void OnClickHome()
     {
         SceneManager.LoadScene(0);
     }
