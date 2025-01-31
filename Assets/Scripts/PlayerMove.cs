@@ -16,7 +16,14 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        if (GameManager.Instance != null)
+        {
+            Debug.Log("GameManager instance found!");
+        }
+        else
+        {
+            Debug.LogError("GameManager instance not found! Please ensure a GameManager exists in the scene.");
+        }
     }
 
 
@@ -25,12 +32,8 @@ public class PlayerMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-
-        if (gameManager == null)
-        {
-            gameManager = FindObjectOfType<GameManager>();
-        }
     }
+
     void Update()
     {
         //Jump
@@ -39,7 +42,7 @@ public class PlayerMove : MonoBehaviour
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             //anim.SetBool("isJumping", true);
         }
-        rigid.velocity = new Vector2(speed, rigid.velocity.y); //rigid.velocity.y
+        rigid.linearVelocity = new Vector2(speed, rigid.linearVelocity.y); //rigid.velocity.y
 
     }
 

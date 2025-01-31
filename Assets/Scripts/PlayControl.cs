@@ -6,7 +6,11 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = GameManager.Instance; // Use the singleton instance
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager instance not found!");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)

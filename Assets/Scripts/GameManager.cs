@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public Transform finishTransform; // Finish 오브젝트의 위치를 가리키는 Transform
-    public GameObject stage1; // Stage1 오브젝트 stage1만 구현 중
-    public GameManager gameManager;
+    public static GameManager Instance { get; private set; } // 싱글턴 인스턴스
+
+    public Transform finishTransform;
+    public GameObject stage1;
     public int stageIndex;
     public GameObject Me;
     public GameObject[] Stages;
@@ -16,7 +19,28 @@ public class GameManager : MonoBehaviour
     public GameObject Gameclear;
     public GameObject[] Hearts;
     public int heart;
- 
+    public int score = 0;  // 점수 변수
+    public TMP_Text scoreText; // UI 점수 텍스트
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+        else
+        {
+            Destroy(gameObject); 
+        }
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount; 
+        scoreText.text = "Score: " + score;  
+        Debug.Log("Score: " + score); 
+    }
 
     public void HeartDown()
     {
