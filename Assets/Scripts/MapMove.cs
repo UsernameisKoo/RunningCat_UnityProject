@@ -1,14 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MapMove : MonoBehaviour
 {
-    public float speed = 0.5f;
+    public float speed;
+    void Start()
+    {
+        
+    }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        transform.Translate(Vector2.left * speed * Time.deltaTime);
+        if (transform.position.x <= -50)
+        {
+            transform.Translate(  Vector2.right * 55.4f * 3f   );
+        }
     }
 }
