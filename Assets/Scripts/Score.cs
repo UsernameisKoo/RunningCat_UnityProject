@@ -26,6 +26,8 @@ public class Score : MonoBehaviour
         }
     }
 
+ 
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && progressManager != null)

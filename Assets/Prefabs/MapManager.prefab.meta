@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Assets/Prefabs/MapManager.prefab.meta
 guid: 00a1ccb58b83550459645632a674ca56
+========
+guid: 2021c11265d588a43ad3defa54a39248
+>>>>>>>> Stashed changes:Assets/Prefabs/EmptyHeart1.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
