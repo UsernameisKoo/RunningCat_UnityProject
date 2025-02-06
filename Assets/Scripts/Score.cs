@@ -3,31 +3,76 @@ using UnityEngine;
 public class Score : MonoBehaviour
 {
     public enum PotionType { Normal, Big, Rainbow } // 포션 종류
-    public PotionType coinType = PotionType.Normal;
-    public int normalPotionValue = 10; // 일반 점수
-    public int BigPotionValue = 20; // 큰 포션 점수
-    public int RainbowPotionValue = 50; // 아이템 점수
+    public PotionType potionType = PotionType.Normal;
+
+    public int normalPotionValue = 10;
+    public int bigPotionValue = 20;
+    public int rainbowPotionValue = 50;
+
+    public int normalPotionProgress = 1;
+    public int bigPotionProgress = 2;
+    public int rainbowPotionProgress = 5;
+
+    private ProgressManager progressManager;
+
+    void Start()
+    {
+        progressManager = FindAnyObjectByType<ProgressManager>();
+
+        if (progressManager == null)
+        {
+            Debug.LogError("ProgressManager가 씬에서 찾을 수 없습니다.");
+            return;
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) 
+        if (other.CompareTag("Player") && progressManager != null)
         {
-            if (coinType == PotionType.Big)
+            // 현재 진행 중인 스테이지 가져오기 (GameManager에서 현재 스테이지 가져오도록 수정)
+            string currentStageKey = GameManager.Instance.GetCurrentStageKey();
+
+            if (!progressManager.progressData.stages.ContainsKey(currentStageKey))
             {
-                GameManager.Instance.AddScore(BigPotionValue); 
-                Debug.Log("Big Potion Collected! +20 points");
-            }
-            else if (coinType == PotionType.Rainbow)
-            {
-                GameManager.Instance.AddScore(RainbowPotionValue); 
-                Debug.Log("Rainbow Potion Collected! +10 points");
-            }
-            else
-            {
-                GameManager.Instance.AddScore(normalPotionValue); 
-                Debug.Log("Normal Potion Collected! +10 points");
+                Debug.LogWarning($"'{currentStageKey}' 스테이지 데이터가 없어서 초기화합니다.");
+                progressManager.progressData.stages[currentStageKey] = new StageProgress { total_potions = 8, collected_potions = 0 };
+                progressManager.SaveProgress();
             }
 
+            StageProgress stage = progressManager.progressData.stages[currentStageKey];
+
+            int potionProgress = potionType switch
+            {
+                PotionType.Normal => normalPotionProgress,
+                PotionType.Big => bigPotionProgress,
+                PotionType.Rainbow => rainbowPotionProgress,
+                _ => 0
+            };
+
+            int newCollected = Mathf.Min(stage.collected_potions + potionProgress, stage.total_potions);
+
+            Debug.Log($"[{currentStageKey}] 현재 포션 진행도: {stage.collected_potions}, 추가할 값: {potionProgress}, 결과 값: {newCollected}");
+
+            if (newCollected > stage.collected_potions)
+            {
+                stage.collected_potions = newCollected;
+                progressManager.progressData.stages[currentStageKey] = stage;
+                progressManager.SaveProgress();
+
+                Debug.Log($"[{currentStageKey}] 포션 진행도 업데이트 완료! 현재 진행도: {stage.collected_potions}/{stage.total_potions}");
+            }
+
+            // 점수 추가
+            int scoreValue = potionType switch
+            {
+                PotionType.Normal => normalPotionValue,
+                PotionType.Big => bigPotionValue,
+                PotionType.Rainbow => rainbowPotionValue,
+                _ => 0
+            };
+
+            GameManager.Instance.AddScore(scoreValue);
             Destroy(gameObject); // 먹은 포션 제거
         }
     }
