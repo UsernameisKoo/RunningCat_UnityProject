@@ -7,7 +7,7 @@ public class StageProgress
 {
     public int total_potions;
     public int collected_potions;
-
+    public int newCollected;
     public float GetProgress()
     {
         return (float)collected_potions / total_potions * 100f;

@@ -22,6 +22,7 @@ public class ProgressManager : MonoBehaviour
         }
 
         filePath = Path.Combine(Application.persistentDataPath, "progress.json");
+        Debug.LogWarning("progressData.stages 초기화합니다.");
         InitializeOrLoadProgress();
 
         //  강제로 stages 초기화 확인 
@@ -47,9 +48,24 @@ public class ProgressManager : MonoBehaviour
 
     public void SaveProgress()
     {
+        if (progressData == null)
+        {
+            Debug.LogError("progressData가 null이므로 저장할 수 없음!");
+            return;
+        }
+
         string json = JsonUtility.ToJson(progressData, true);
+
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogError("Json 변환 실패! progressData가 비어있거나 직렬화 오류 발생");
+            return;
+        }
+
         File.WriteAllText(filePath, json);
+        Debug.Log($"progress.json 저장 완료! 파일 경로: {filePath}\n{json}");
     }
+
 
     public void LoadProgress()
     {
@@ -94,24 +110,53 @@ public class ProgressManager : MonoBehaviour
         {
             progressData.unlockedStages = new Dictionary<string, bool>();
         }
-        {
-            progressData.unlockedStages["stage1"] = true;
-        progressData.unlockedStages["stage2"] = false;
-        progressData.unlockedStages["stage3"] = false;
-        };
-    }
+        if (!progressData.unlockedStages.ContainsKey("stage1")) progressData.unlockedStages["stage1"] = true;
+        if (!progressData.unlockedStages.ContainsKey("stage2")) progressData.unlockedStages["stage2"] = false;
+        if (!progressData.unlockedStages.ContainsKey("stage3")) progressData.unlockedStages["stage3"] = false;
 
-    public bool IsStageUnlocked(string stageKey)
-    {
-        return progressData.unlockedStages.ContainsKey(stageKey) && progressData.unlockedStages[stageKey];
+        Debug.LogWarning("스테이지 초기화 완료");
+        Debug.Log($"Progress 파일 경로: {Application.persistentDataPath}");
+
+        SaveProgress();  // 수정된 초기화 내용을 저장
     }
 
     public void UnlockStage(string stageKey)
     {
-        if (progressData.unlockedStages.ContainsKey(stageKey))
+        if (!progressData.unlockedStages.ContainsKey(stageKey))
         {
-            progressData.unlockedStages[stageKey] = true;
-            SaveProgress();
+            string alternativeKey = stageKey.Replace("_", ""); // "stage_1" → "stage1"
+            if (progressData.unlockedStages.ContainsKey(alternativeKey))
+            {
+                stageKey = alternativeKey;
+            }
+            else
+            {
+                Debug.LogWarning($"UnlockStage: {stageKey}가 존재하지 않음");
+                return;
+            }
         }
+
+        Debug.Log($"스테이지 잠금 해제");
+        progressData.unlockedStages[stageKey] = true;
+        SaveProgress(); // 변경 사항을 저장하여 유지
     }
+
+
+    public bool IsStageUnlocked(string stageKey)
+    {
+        // 키 값 통일 (예: "stage_1"이 저장된 데이터에 없으면 "stage1" 체크)
+        if (!progressData.unlockedStages.ContainsKey(stageKey))
+        {
+            string alternativeKey = stageKey.Replace("_", ""); // "stage_1" → "stage1"
+            if (progressData.unlockedStages.ContainsKey(alternativeKey))
+            {
+                return progressData.unlockedStages[alternativeKey];
+            }
+            return false;
+        }
+        return progressData.unlockedStages[stageKey];
+    }
+
+
+
 }
