@@ -41,6 +41,7 @@ public class ProgressManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("√ ±‚»≠");
             InitializeProgress();
             SaveProgress();
         }

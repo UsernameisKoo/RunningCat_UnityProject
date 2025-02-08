@@ -738,15 +738,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6860857276548367976, guid: 180604a8c91bfb74a9fb987adf8c0edb, type: 3}
       propertyPath: 'stageKeys.Array.data[0]'
-      value: Stage1
+      value: stage1
       objectReference: {fileID: 0}
     - target: {fileID: 6860857276548367976, guid: 180604a8c91bfb74a9fb987adf8c0edb, type: 3}
       propertyPath: 'stageKeys.Array.data[1]'
-      value: Stage2
+      value: stage2
       objectReference: {fileID: 0}
     - target: {fileID: 6860857276548367976, guid: 180604a8c91bfb74a9fb987adf8c0edb, type: 3}
       propertyPath: 'stageKeys.Array.data[2]'
-      value: Stage3
+      value: stage3
       objectReference: {fileID: 0}
     - target: {fileID: 6860857276548367976, guid: 180604a8c91bfb74a9fb987adf8c0edb, type: 3}
       propertyPath: 'stageButtons.Array.data[0]'
