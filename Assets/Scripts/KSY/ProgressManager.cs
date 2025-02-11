@@ -94,6 +94,26 @@ public class ProgressManager : MonoBehaviour
 
     }
 
+    public bool AllPotionsCollected()
+    {
+        foreach (var stage in progressData.stages)
+        {
+            if (stage.Key != "stage_4" && stage.Value.collected_potions < stage.Value.total_potions)
+            {
+                return false; // 하나라도 덜 모은 스테이지가 있다면 false 반환
+            }
+        }
+
+        // 모든 포션을 모았으면 stage4(Ending) 해금
+        Debug.LogWarning("엔딩 스테이지 해금!");
+        UnlockStage("stage4");
+        SaveProgress(); // 변경사항 저장
+        return true;
+    }
+
+
+
+
     void InitializeProgress()
     {
         if (progressData.stages == null)
@@ -101,8 +121,8 @@ public class ProgressManager : MonoBehaviour
             progressData.stages = new Dictionary<string, StageProgress>
             {
                 { "stage_1", new StageProgress { total_potions = 8, collected_potions = 0 } },
-                { "stage_2", new StageProgress { total_potions = 30, collected_potions = 0 } },
-                { "stage_3", new StageProgress { total_potions = 50, collected_potions = 0 } }
+                { "stage_2", new StageProgress { total_potions = 8, collected_potions = 0 } },
+                { "stage_3", new StageProgress { total_potions = 8, collected_potions = 0 } }
             };
         }
 
@@ -114,6 +134,7 @@ public class ProgressManager : MonoBehaviour
         if (!progressData.unlockedStages.ContainsKey("stage1")) progressData.unlockedStages["stage1"] = true;
         if (!progressData.unlockedStages.ContainsKey("stage2")) progressData.unlockedStages["stage2"] = false;
         if (!progressData.unlockedStages.ContainsKey("stage3")) progressData.unlockedStages["stage3"] = false;
+        if (!progressData.unlockedStages.ContainsKey("stage4")) progressData.unlockedStages["stage4"] = false;
 
         Debug.LogWarning("스테이지 초기화 완료");
         Debug.Log($"Progress 파일 경로: {Application.persistentDataPath}");

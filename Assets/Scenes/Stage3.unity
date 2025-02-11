@@ -717,7 +717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b710211e8af3b446ac95a3dec36a0ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStageKey: stage2
+  currentStageKey: stage3
   nextStageKey: stage3
 --- !u!61 &160171496
 BoxCollider2D:

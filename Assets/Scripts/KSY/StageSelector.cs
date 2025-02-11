@@ -11,10 +11,19 @@ public class StageSelector : MonoBehaviour
     {
         for (int i = 0; i < stageButtons.Length; i++)
         {
-            bool isUnlocked = ProgressManager.Instance.IsStageUnlocked(stageKeys[i]);
-            stageButtons[i].interactable = isUnlocked;
+             bool isUnlocked = ProgressManager.Instance.IsStageUnlocked(stageKeys[i]);
+             stageButtons[i].interactable = isUnlocked;
+        }
+
+        //  마지막 버튼 (Ending 버튼) 활성화 체크
+        if (ProgressManager.Instance.AllPotionsCollected())
+        {
+            stageButtons[stageButtons.Length - 1].interactable = true;
         }
     }
+
+
+
 
     public void LoadStage(string stageName)
     {
