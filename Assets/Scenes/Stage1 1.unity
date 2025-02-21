@@ -10655,6 +10655,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RubberCone
       objectReference: {fileID: 0}
+    - target: {fileID: 6416116247325547763, guid: da68ab638fec7af408485b4ce32de2ab, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

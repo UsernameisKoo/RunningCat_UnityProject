@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 public class SignPostGenerate: MonoBehaviour
 {
     public float speed;
+    int randomValue = Random.Range(0, 1);
     void OnEnable()
     {
         
