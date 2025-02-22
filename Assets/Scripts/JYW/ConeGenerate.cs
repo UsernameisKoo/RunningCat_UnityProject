@@ -1,15 +1,13 @@
-using System;
 using UnityEngine;
-using System.Collections;
 
-public class SignPostGenerate: MonoBehaviour
+public class ConeGenerate : MonoBehaviour
 {
     public float speed;
     public static int randomValue = UnityEngine.Random.Range(0, 1);
 
     void Awake()
     {
-            
+
     }
 
 
@@ -21,8 +19,6 @@ public class SignPostGenerate: MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.left * speed * Time.deltaTime);
-        
+
     }
-
-
 }
